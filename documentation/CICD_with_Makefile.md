@@ -373,3 +373,4 @@ LOCATION ?= eastus
 - **Push code to the `main` branch.**
 - **GitHub Actions will trigger the workflow, executing the Makefile targets.**
 
+L.,
