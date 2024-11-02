@@ -11,19 +11,19 @@ To develop a Python-based microservice that calculates health metrics (BMI and B
 ### **Mathematical Equations for Health Calculations**
 
 1. **Body Mass Index (BMI)**:
-   \[
-   \text{BMI} = \frac{\text{weight (kg)}}{(\text{height (m)})^2}
-   \]
+   
+  $$ \text{BMI} = \frac{\text{weight (kg)}}{(\text{height (m)})^2}$$
+   
 
 2. **Basal Metabolic Rate (BMR)** (Harris-Benedict Equation):
    - For **males**:
-     \[
-     \text{BMR} = 88.362 + (13.397 \times \text{weight (kg)}) + (4.799 \times \text{height (cm)}) - (5.677 \times \text{age (years)})
-     \]
+    
+    $$ \text{BMR} = 88.362 + (13.397 \times \text{weight (kg)}) + (4.799 \times \text{height (cm)}) - (5.677 \times \text{age (years)})$$
+    
    - For **females**:
-     \[
+     $$
      \text{BMR} = 447.593 + (9.247 \times \text{weight (kg)}) + (3.098 \times \text{height (cm)}) - (4.330 \times \text{age (years)})
-     \]
+     $$
 
 ---
 
@@ -72,28 +72,16 @@ To develop a Python-based microservice that calculates health metrics (BMI and B
 
 - **app.py**
   ```python
-  from flask import Flask, request, jsonify
-  from health_utils import calculate_bmi, calculate_bmr
 
   app = Flask(__name__)
 
   @app.route('/bmi', methods=['POST'])
   def bmi():
-      data = request.json
-      height = data['height']
-      weight = data['weight']
-      result = calculate_bmi(height, weight)
-      return jsonify({"bmi": result})
+      # here goes the code 
 
   @app.route('/bmr', methods=['POST'])
   def bmr():
-      data = request.json
-      height = data['height']
-      weight = data['weight']
-      age = data['age']
-      gender = data['gender']
-      result = calculate_bmr(height, weight, age, gender)
-      return jsonify({"bmr": result})
+      # here goes the code
 
   if __name__ == '__main__':
       app.run(host='0.0.0.0', port=5000)
@@ -103,16 +91,11 @@ To develop a Python-based microservice that calculates health metrics (BMI and B
   ```python
   def calculate_bmi(height, weight):
       """Calculate Body Mass Index (BMI) given height in meters and weight in kilograms."""
-      return weight / (height ** 2)
+      return BMI
 
   def calculate_bmr(height, weight, age, gender):
       """Calculate Basal Metabolic Rate (BMR) using the Harris-Benedict equation."""
-      if gender.lower() == 'male':
-          return 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
-      elif gender.lower() == 'female':
-          return 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
-      else:
-          return "Invalid gender"
+      
   ```
 
 #### **2. Containerization with Docker**
@@ -142,26 +125,22 @@ CMD ["python", "app.py"]
 **Example Makefile**:
 
 ```makefile
-IMAGE_NAME=health-calculator-service
-PORT=5000
+include .env
+export
 
 .PHONY: init run test build clean
 
 init:
 	@echo "Installing dependencies..."
-	pip install -r requirements.txt
 
 run:
 	@echo "Running the Flask app..."
-	python app.py
 
 test:
 	@echo "Running tests..."
-	python -m unittest discover
 
 build:
 	@echo "Building the Docker image..."
-	docker build -t $(IMAGE_NAME) .
 ```
 
 #### **4. Dependency Management**
@@ -182,18 +161,13 @@ Flask==2.0.2
 
 ```python
 import unittest
-from health_utils import calculate_bmi, calculate_bmr
+from health_utils import calculate_bmi
 
 class TestHealthUtils(unittest.TestCase):
 
     def test_calculate_bmi(self):
         self.assertAlmostEqual(calculate_bmi(1.75, 70), 22.86, places=2)
 
-    def test_calculate_bmr_male(self):
-        self.assertAlmostEqual(calculate_bmr(175, 70, 25, 'male'), 1706.69, places=2)
-
-    def test_calculate_bmr_female(self):
-        self.assertAlmostEqual(calculate_bmr(160, 60, 30, 'female'), 1384.14, places=2)
 
 if __name__ == '__main__':
     unittest.main()
@@ -227,19 +201,14 @@ jobs:
         python-version: '3.x'
 
     - name: Install dependencies
-      run: |
-        cd health-calculator-service
-        make init
+      run: | # command
+        
 
     - name: Run tests
-      run: |
-        cd health-calculator-service
-        make test
+      run: | # command
 
     - name: Build Docker image
-      run: |
-        cd health-calculator-service
-        make build
+      run: | # command
 
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
