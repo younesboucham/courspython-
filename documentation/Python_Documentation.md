@@ -347,7 +347,7 @@ To start coding in Python, follow these steps:
 
 ## **2. Variables and Data Types**
 
----
+
 
 #### **2.1. Introduction to Variables**
 

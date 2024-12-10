@@ -30,7 +30,7 @@ This repository is designed to support the **Python for DevOps** course taught b
 
 ### Labs
 
-- **`Lab1_python_Basics.ipynb`**: A lab notebook containing practical exercises on basic Python operations. It's designed to reinforce the concepts learned in the lectures through hands-on coding.
+- **`Lab1.ipynb`**: A lab notebook containing practical exercises on basic Python operations. It's designed to reinforce the concepts learned in the lectures through hands-on coding.
 
 ### Documentation
 
