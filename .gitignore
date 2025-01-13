@@ -1,4 +1,4 @@
 *.csv
 /private
-.venv/
+venv/
 *.log
