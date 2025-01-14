@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label, input, button {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Health Calculator</h1>
+
+    <!-- Form to calculate BMI -->
+    <h2>Calculate BMI</h2>
+    <form id="bmiForm">
+        <label for="bmiHeight">Height (meters):</label>
+        <input type="number" step="0.01" id="bmiHeight" required>
+
+        <label for="bmiWeight">Weight (kg):</label>
+        <input type="number" step="0.1" id="bmiWeight" required>
+
+        <button type="submit">Calculate BMI</button>
+    </form>
+    <p id="bmiResult"></p>
+
+    <!-- Form to calculate BMR -->
+    <h2>Calculate BMR</h2>
+    <form id="bmrForm">
+        <label for="bmrHeight">Height (cm):</label>
+        <input type="number" id="bmrHeight" required>
+
+        <label for="bmrWeight">Weight (kg):</label>
+        <input type="number" id="bmrWeight" required>
+
+        <label for="bmrAge">Age (years):</label>
+        <input type="number" id="bmrAge" required>
+
+        <label for="bmrGender">Gender:</label>
+        <select id="bmrGender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+
+        <button type="submit">Calculate BMR</button>
+    </form>
+    <p id="bmrResult"></p>
+
+    <script>
+        // Function to handle the BMI form submission
+        document.getElementById('bmiForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const height = document.getElementById('bmiHeight').value;
+            const weight = document.getElementById('bmiWeight').value;
+
+            const response = await fetch('http://localhost:5000/bmi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight) })
+            });
+            
+            const data = await response.json();
+            document.getElementById('bmiResult').innerText = `Your BMI is: ${data.BMI}`;
+        });
+
+        // Function to handle the BMR form submission
+        document.getElementById('bmrForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const height = document.getElementById('bmrHeight').value;
+            const weight = document.getElementById('bmrWeight').value;
+            const age = document.getElementById('bmrAge').value;
+            const gender = document.getElementById('bmrGender').value;
+
+            const response = await fetch('http://localhost:5000/bmr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight), age: parseInt(age), gender })
+            });
+
+            const data = await response.json();
+            document.getElementById('bmrResult').innerText = `Your BMR is: ${data.BMR}`;
+        });
+    </script>
+</body>
+</html>
