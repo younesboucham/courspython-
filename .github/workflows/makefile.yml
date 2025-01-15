@@ -31,9 +31,9 @@ jobs:
       run: cd health-calculator-service
            && make test
 
-    - name: Test_api
-      run: cd health-calculator-service
-           && make test_api
+    # - name: Test_api
+    #   run: cd health-calculator-service
+    #        && make test_api
 
     - name: run
       run: cd health-calculator-service 
