@@ -20,19 +20,25 @@ jobs:
          python-version: '3.x'
 
     - name: Install dependencies
-      run: make install
+      run: cd health-calculator-service
+            make install
     
     - name: Build
-      run: make build
+      run: cd health-calculator-service
+            make build
 
     - name: run
-      run: make run
+      run: cd health-calculator-service 
+            make run
   
     - name: Test
-      run: make test
+      run: cd health-calculator-service
+            make test
 
     - name: Run distcheck
-      run: make distcheck
+      run: cd health-calculator-service
+            make distcheck
 
     - name: Test_api
-      run: make test_api
+      run: cd health-calculator-service
+            make test_api
