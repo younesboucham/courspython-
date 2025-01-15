@@ -21,7 +21,7 @@ jobs:
 
     - name: Install dependencies
       run: cd health-calculator-service
-            make install
+           && make install
     
     - name: Build
       run: cd health-calculator-service
