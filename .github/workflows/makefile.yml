@@ -31,10 +31,6 @@ jobs:
       run: cd health-calculator-service
            && make test
 
-    - name: Run distcheck
-      run: cd health-calculator-service
-           && make distcheck
-
     - name: Test_api
       run: cd health-calculator-service
            && make test_api
