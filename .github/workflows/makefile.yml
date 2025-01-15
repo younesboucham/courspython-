@@ -25,20 +25,20 @@ jobs:
     
     - name: Build
       run: cd health-calculator-service
-            make build
+           && make build
 
     - name: run
       run: cd health-calculator-service 
-            make run
+           && make run
   
     - name: Test
       run: cd health-calculator-service
-            make test
+           && make test
 
     - name: Run distcheck
       run: cd health-calculator-service
-            make distcheck
+           && make distcheck
 
     - name: Test_api
       run: cd health-calculator-service
-            make test_api
+           && make test_api
