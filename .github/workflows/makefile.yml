@@ -1,0 +1,38 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+ 
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+    - uses: actions/checkout@v4
+
+    - name: python-install
+    - uses: actions/setup-python@v2
+      with:
+         python-version: '3.x'
+
+    - name: Install dependencies
+      run: make init
+    
+    - name: Build
+      run: make build
+
+    - name: run
+      run: make run
+  
+    - name: Test
+      run: make test
+
+    - name: Run distcheck
+      run: make distcheck
+
+    - name: Test_api
+      run: make test_api
