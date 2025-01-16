@@ -31,6 +31,11 @@
         button:hover {
             background-color: #45a049;
         }
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +53,7 @@
 
         <button type="submit">Calculate BMI</button>
     </form>
-    <p id="bmiResult"></p>
+    <p class="result" id="bmiResult"></p> <!-- Place for BMI result -->
 
     <!-- Form to calculate BMR -->
     <h2>Calculate BMR</h2>
@@ -70,7 +75,7 @@
 
         <button type="submit">Calculate BMR</button>
     </form>
-    <p id="bmrResult"></p>
+    <p class="result" id="bmrResult"></p> <!-- Place for BMR result -->
 
     <script>
         // Function to handle the BMI form submission
@@ -88,7 +93,7 @@
             });
             
             const data = await response.json();
-            document.getElementById('bmiResult').innerText = `Your BMI is: ${data.BMI}`;
+            document.getElementById('bmiResult').innerText = `Your BMI is: ${data.BMI.toFixed(2)}`; // Display BMI result
         });
 
         // Function to handle the BMR form submission
@@ -108,7 +113,7 @@
             });
 
             const data = await response.json();
-            document.getElementById('bmrResult').innerText = `Your BMR is: ${data.BMR}`;
+            document.getElementById('bmrResult').innerText = `Your BMR is: ${data.BMR.toFixed(2)}`; // Display BMR result
         });
     </script>
 </body>
