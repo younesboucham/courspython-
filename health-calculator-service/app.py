@@ -7,25 +7,30 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/bmi')
+# Route pour calculer l'IMC (BMI), en utilisant la méthode POST
+@app.route('/bmi', methods=['POST'])
 def bmi():
-    # ici va le code pour calculer l'IMC
+    # Récupération des données JSON envoyées avec la requête POST
     data = request.get_json()
     height = data.get('height')
     weight = data.get('weight')
+
+    # Vérification si les paramètres 'height' et 'weight' sont fournis
     if not height or not weight:
         return jsonify({"error": "Les paramètres 'height' et 'weight' sont requis"}), 400
-    bmi_value = calculate_bmi(height, weight)
-    return jsonify({"bmi": bmi_value})
-    #return "test"
-    # pass
 
+    # Calcul de l'IMC
+    bmi_value = calculate_bmi(height, weight)
+
+    # Retour du résultat sous forme de JSON
+    return jsonify({"bmi": bmi_value})
+
+# Route pour calculer le TMB (BMR), en utilisant la méthode POST
 @app.route('/bmr', methods=['POST'])
 def bmr():
-    # ici va le code pour calculer le TMB
     data = request.get_json()
 
-    # Récupération des paramètres 'height', 'weight', 'age', et 'gender' depuis les données JSON
+    # Récupération des paramètres 'height', 'weight', 'age', et 'gender'
     height = data.get('height')  # en centimètres
     weight = data.get('weight')  # en kilogrammes
     age = data.get('age')        # en années
@@ -37,11 +42,9 @@ def bmr():
 
     # Calcul du TMB
     bmr_value = calculate_bmr(height, weight, age, gender)
-    
+
     # Retour du résultat sous forme de JSON
-    #return jsonify({"bmr": bmr_value})
-    return f"<h1>Votre TMB est {bmr_value:.2f} calories par jour</h1>"
-    #pass
+    return jsonify({"bmr": bmr_value})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
