@@ -84,16 +84,35 @@
             const height = document.getElementById('bmiHeight').value;
             const weight = document.getElementById('bmiWeight').value;
 
-            const response = await fetch('http://localhost:5000/bmi', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight) })
-            });
-            
-            const data = await response.json();
-            document.getElementById('bmiResult').innerText = `Your BMI is: ${data.BMI.toFixed(2)}`; // Display BMI result
+            // Logging the inputs to check the values
+            console.log('BMI Inputs:', { height, weight });
+
+            try {
+                const response = await fetch('http://localhost:5000/bmi', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight) })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('BMI Response:', data); // Log the response data
+
+                // Check if BMI is returned correctly
+                if (data.BMI !== undefined) {
+                    document.getElementById('bmiResult').innerText = `Your BMI is: ${data.BMI.toFixed(2)}`;
+                } else {
+                    throw new Error('BMI value not found in response.');
+                }
+            } catch (error) {
+                console.error('Error in BMI calculation:', error);
+                document.getElementById('bmiResult').innerText = "Error calculating BMI. Please try again.";
+            }
         });
 
         // Function to handle the BMR form submission
@@ -104,16 +123,35 @@
             const age = document.getElementById('bmrAge').value;
             const gender = document.getElementById('bmrGender').value;
 
-            const response = await fetch('http://localhost:5000/bmr', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight), age: parseInt(age), gender })
-            });
+            // Logging the inputs to check the values
+            console.log('BMR Inputs:', { height, weight, age, gender });
 
-            const data = await response.json();
-            document.getElementById('bmrResult').innerText = `Your BMR is: ${data.BMR.toFixed(2)}`; // Display BMR result
+            try {
+                const response = await fetch('http://localhost:5000/bmr', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ height: parseFloat(height), weight: parseFloat(weight), age: parseInt(age), gender })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('BMR Response:', data); // Log the response data
+
+                // Check if BMR is returned correctly
+                if (data.BMR !== undefined) {
+                    document.getElementById('bmrResult').innerText = `Your BMR is: ${data.BMR.toFixed(2)}`;
+                } else {
+                    throw new Error('BMR value not found in response.');
+                }
+            } catch (error) {
+                console.error('Error in BMR calculation:', error);
+                document.getElementById('bmrResult').innerText = "Error calculating BMR. Please try again.";
+            }
         });
     </script>
 </body>
